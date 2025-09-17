@@ -1,0 +1,180 @@
+// ===================================================
+// BIẾN MÀU SẮC (Dùng riêng cho Header)
+// ===================================================
+:host {
+  --primary-color: #f8b21a;
+  --text-color: #ffffff;
+  --text-muted: #888888;
+}
+
+// ===================================================
+// STYLE CHÍNH CỦA HEADER
+// ===================================================
+.site-header {
+  background-color: #181818;
+  border-bottom: 2px solid #282828;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 15px 0; // Giữ padding dọc để header có độ cao linh hoạt
+  
+  .main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+// --- KHỐI BÊN TRÁI: LOGO ---
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  padding-left: 20px; // Giữ lại padding bạn đã thêm
+
+  img {
+    height: 60px;
+    width: auto;
+  }
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// --- KHỐI GIỮA: MENU LINKS ---
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 35px;
+
+  a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.3rem; // Sửa lỗi cú pháp: dùng dấu chấm '.'
+    padding-bottom: 8px;
+    position: relative;
+    transition: color 0.3s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease-out;
+    }
+    
+    &:hover {
+      color: var(--primary-color);
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// --- KHỐI BÊN PHẢI: ACTIONS (CART & AUTH) ---
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding-right: 20px;
+}
+
+// --- ICON GIỎ HÀNG ---
+.cart-icon {
+  position: relative;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  
+  mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: var(--primary-color);
+  color: #000;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+// --- KHỐI AUTH (PROFILE & LOGIN BUTTON) ---
+.auth-section {
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px; // Giảm khoảng cách cho gọn hơn
+
+    .avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary-color);
+    }
+
+    .user-name {
+      color: var(--text-color);
+      font-weight: 500;
+    }
+
+    .btn-logout {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--text-muted);
+      color: var(--text-muted);
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: var(--primary-color);
+        color: #000;
+        border-color: var(--primary-color);
+      }
+    }
+  }
+
+  .btn-primary { // Style cho nút Login/Register
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid #ffffff;
+    background-color: #ffffff;
+    color: #000000;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: transparent;
+      color: #ffffff;
+    }
+  }
+}

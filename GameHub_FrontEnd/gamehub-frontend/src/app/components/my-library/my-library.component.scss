@@ -1,0 +1,84 @@
+:host {
+  color: var(--text-color);
+}
+
+.library-container {
+  max-width: 1400px;
+  margin: 40px auto;
+  padding: 20px;
+
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color, #444);
+    padding-bottom: 15px;
+  }
+}
+
+// Grid chính chứa các game
+.library-grid {
+  display: grid;
+  // Dòng ma thuật: tạo các cột tự động, mỗi cột có chiều rộng tối thiểu 220px
+  // và tối đa là 1fr (chia đều không gian còn lại)
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+// Thẻ game
+.game-card {
+  text-decoration: none;
+  color: var(--text-color);
+  background-color: var(--component-bg-secondary, #2a2a2a);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  // Hiệu ứng hover giống Epic Games
+  &:hover {
+    transform: scale(1.04);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  }
+}
+
+// Poster game
+.game-poster {
+  width: 100%;
+  // Tỷ lệ khung hình dọc, giống bìa game
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-bottom: 3px solid var(--primary-color, #42a5f5);
+}
+
+// Thông tin game bên dưới poster
+.game-info {
+  padding: 15px;
+  flex-grow: 1; // Đảm bảo phần này chiếm hết không gian còn lại
+}
+
+.game-title {
+  font-weight: bold;
+  font-size: 1.1em;
+  display: block; // Đảm bảo nó chiếm cả dòng
+}
+
+// Style cho các trạng thái đặc biệt
+.empty-state, .loading-state {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: var(--component-bg, #1e1e1e);
+  border-radius: 8px;
+  margin-top: 40px;
+
+  h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  p {
+    color: var(--text-muted);
+    font-size: 1.2em;
+    margin-bottom: 30px;
+  }
+}

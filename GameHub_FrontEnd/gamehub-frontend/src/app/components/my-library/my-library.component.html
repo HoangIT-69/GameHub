@@ -1,0 +1,39 @@
+<div class="library-container">
+  <h1>My Library</h1>
+
+  <!-- Sử dụng async pipe để tự động subscribe và unsubscribe -->
+  <ng-container *ngIf="(libraryItems$ | async) as items; else loading">
+    
+    <!-- Kiểm tra xem thư viện có game không -->
+    <div *ngIf="items.length > 0; else emptyLibrary" class="library-grid">
+      
+      <!-- Lặp qua từng game và hiển thị card -->
+      <a *ngFor="let item of items" [routerLink]="['/games', item.game._id]" class="game-card">
+        <img [src]="item.game.images[1]" [alt]="item.game.title" class="game-poster">
+        <div class="game-info">
+          <span class="game-title">{{ item.game.title }}</span>
+          <!-- Bạn có thể thêm các thông tin khác ở đây nếu muốn -->
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Template hiển thị khi thư viện trống -->
+    <ng-template #emptyLibrary>
+      <div class="empty-state">
+        <h2>Your library is empty</h2>
+        <p>Games you purchase will appear here.</p>
+        <a routerLink="/" class="btn btn-primary">Go Shopping</a>
+      </div>
+    </ng-template>
+
+  </ng-container>
+
+  <!-- Template hiển thị khi đang tải dữ liệu -->
+  <ng-template #loading>
+    <div class="loading-state">
+      <p>Loading your library...</p>
+      <!-- Bạn có thể thêm spinner ở đây -->
+    </div>
+  </ng-template>
+</div>

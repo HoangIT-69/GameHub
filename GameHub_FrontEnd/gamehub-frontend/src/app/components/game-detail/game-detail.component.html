@@ -1,0 +1,165 @@
+<div class="page-container" *ngIf="!isLoading">
+  <div *ngIf="game; else notFound">
+    
+    <!-- 1. HERO HEADER (Giữ nguyên) -->
+    <div class="game-detail-header" [style.backgroundImage]="'url(' + game.images[0] + ')'">
+      <div class="overlay"></div>
+      <div class="header-content">
+        <h1>{{ game.title }}</h1>
+        <p>By {{ game.developer }}</p>
+        <!-- GENRES (để ở cuối) -->
+        <div class="genre-tags">
+        <span *ngFor="let genre of game.genres" class="genre-tag">{{ genre }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. PHẦN THÂN TRANG VỚI LAYOUT 2 CỘT -->
+    <div class="game-content container">
+      
+      <!-- CỘT BÊN TRÁI: NỘI DUNG CHÍNH -->
+      <div class="main-content">
+        <!-- NÚT MUA GAME (Hiển thị trên mobile) -->
+        <div class="buy-section-mobile">
+          <h2>{{ game.price | currency:'USD' }}</h2>
+          <button class="btn btn-primary">Add to Cart</button>
+        </div>
+
+        <p class="description">{{ game.description }}</p>
+        
+        <!-- GALLERY SLIDER -->
+        <ng-container *ngIf="game.images && game.images.length > 2">
+          <h2>Gallery</h2>
+          <div class="swiper gallery-swiper">
+            <div class="swiper-wrapper">
+              <div *ngFor="let imageUrl of game.images.slice(2)" class="swiper-slide gallery-slide">
+                <img [src]="imageUrl" alt="{{ game.title }} screenshot">
+              </div>
+            </div>
+            <div class="swiper-button-next gallery-button-next"></div>
+            <div class="swiper-button-prev gallery-button-prev"></div>
+            <div class="swiper-pagination gallery-pagination"></div>
+          </div>
+        </ng-container>
+
+        <!-- Thêm các phần khác sau này: Cấu hình yêu cầu, reviews... -->
+          <!-- ==================================== -->
+  <!-- 1. KHỐI YÊU CẦU CẤU HÌNH (MỚI)      -->
+  <!-- ==================================== -->
+  <section class="system-requirements">
+    <h2>System Requirements</h2>
+    <div class="requirements-grid">
+      <!-- Cấu hình tối thiểu -->
+      <div class="requirements-column">
+        <h3>Minimum</h3>
+        <ul>
+          <li><strong>OS:</strong> Windows 10</li>
+          <li><strong>Processor:</strong> INTEL CORE I5-8400 or AMD RYZEN 3 3300X</li>
+          <li><strong>Memory:</strong> 12 GB RAM</li>
+          <li><strong>Graphics:</strong> NVIDIA GEFORCE GTX 1060 3 GB or AMD RADEON RX 580 4 GB</li>
+          <li><strong>DirectX:</strong> Version 12</li>
+          <li><strong>Storage:</strong> 60 GB available space</li>
+        </ul>
+      </div>
+      <!-- Cấu hình đề nghị -->
+      <div class="requirements-column">
+        <h3>Recommended</h3>
+        <ul>
+          <li><strong>OS:</strong> Windows 10/11</li>
+          <li><strong>Processor:</strong> INTEL CORE I7-8700K or AMD RYZEN 5 3600X</li>
+          <li><strong>Memory:</strong> 16 GB RAM</li>
+          <li><strong>Graphics:</strong> NVIDIA GEFORCE GTX 1070 8 GB or AMD RADEON RX VEGA 56 8 GB</li>
+          <li><strong>DirectX:</strong> Version 12</li>
+          <li><strong>Storage:</strong> 60 GB available space</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================== -->
+  <!-- 2. KHỐI ĐÁNH GIÁ CỦA NGƯỜI DÙNG (MỚI) -->
+  <!-- ==================================== -->
+  <section class="user-reviews">
+    <h2>User Reviews</h2>
+    <div class="reviews-list">
+      <!-- Review 1 -->
+      <div class="review-card">
+        <div class="review-author">
+          <img src="https://i.pravatar.cc/50?u=a042581f4e29026704d" alt="avatar" class="author-avatar">
+          <div class="author-info">
+            <span class="author-name">John Doe</span>
+            <span class="review-date">September 10, 2024</span>
+          </div>
+        </div>
+        <div class="review-rating">
+          ★★★★☆
+        </div>
+        <p class="review-text">An absolute masterpiece. The open world is breathtaking and the combat is challenging yet rewarding. 100+ hours in and still finding new things. A must-play for any RPG fan!</p>
+      </div>
+
+      <!-- Review 2 -->
+      <div class="review-card">
+        <div class="review-author">
+          <img src="https://i.pravatar.cc/50?u=a042581f4e29026705d" alt="avatar" class="author-avatar">
+          <div class="author-info">
+            <span class="author-name">Jane Smith</span>
+            <span class="review-date">September 08, 2024</span>
+          </div>
+        </div>
+        <div class="review-rating">
+          ★★★★★
+        </div>
+        <p class="review-text">I've never been so immersed in a game world before. The exploration is top-notch, and every corner of the map has a story to tell. Be prepared to die a lot, but it's worth it. Game of the year for me!</p>
+      </div>
+    </div>
+    <a href="#" class="btn btn-secondary see-all-reviews">See All Reviews</a>
+  </section>
+      </div>
+
+      <!-- CỘT BÊN PHẢI: SIDEBAR MUA HÀNG -->
+      <aside class="sidebar-content">
+  <div class="sidebar-sticky-content">
+    
+    <!-- Ảnh bìa -->
+    <div class="sidebar-cover-wrapper">
+      <img [src]="game.images[1]" alt="{{ game.title }}" class="sidebar-cover">
+    </div>
+    
+    <!-- THÔNG TIN META (ĐÃ DI CHUYỂN LÊN ĐÂY) -->
+    <div class="sidebar-meta-info">
+        <div class="meta-item">
+            <span class="meta-label">Developer</span>
+            <span class="meta-value">{{ game.developer }}</span>
+        </div>
+        <div class="meta-item">
+            <span class="meta-label">Publisher</span>
+            <span class="meta-value">{{ game.publisher }}</span>
+        </div>
+        <div class="meta-item">
+            <span class="meta-label">Release Date</span>
+            <span class="meta-value">{{ game.releaseDate | date:'longDate' }}</span>
+        </div>
+    </div>
+
+    <!-- KHỐI MUA HÀNG -->
+    <div class="sidebar-purchase-section">
+      <h2>{{ game.price | currency:'USD' }}</h2>
+      <button class="btn btn-primary" (click)="addToCart(game)">Add to Cart</button>
+    </div>
+
+    
+
+  </div>
+</aside>
+
+    </div>
+  </div>
+
+  <!-- Các khối notFound và isLoading giữ nguyên -->
+  <ng-template #notFound>
+    <!-- ... -->
+  </ng-template>
+</div>
+<div class="loading-container" *ngIf="isLoading">
+  <!-- ... -->
+</div>

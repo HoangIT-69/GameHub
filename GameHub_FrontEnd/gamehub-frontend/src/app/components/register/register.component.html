@@ -1,0 +1,36 @@
+<div class="auth-page">
+  <div class="auth-form-container">
+    <div class="auth-header">
+      <img src="assets/img/logo.jpg" alt="GameHub Logo" class="auth-logo">
+      <h2>Create an Account</h2>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Full Name</mat-label>
+        <input matInput formControlName="name" type="text" required>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Email Address</mat-label>
+        <input matInput formControlName="email" type="email" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" required>
+        <mat-hint>Must be at least 6 characters</mat-hint>
+      </mat-form-field>
+      
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+      <button mat-flat-button color="primary" class="auth-button" type="submit" [disabled]="registerForm.invalid">
+        SIGN UP
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Already have an account? <a routerLink="/login">Log In</a></p>
+    </div>
+  </div>
+</div>

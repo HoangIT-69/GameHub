@@ -1,0 +1,33 @@
+<div class="auth-page">
+  <div class="auth-form-container">
+    <div class="auth-header">
+      <img src="assets/img/logo.jpg" alt="GameHub Logo" class="auth-logo">
+      <h2>Sign In</h2>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Email Address</mat-label>
+        <input matInput formControlName="email" type="email" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" required>
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" aria-label="Toggle password visibility">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+      <button mat-flat-button color="primary" class="auth-button" type="submit" [disabled]="loginForm.invalid">
+        LOG IN NOW
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Don't have an account? <a routerLink="/register">Sign Up</a></p>
+    </div>
+  </div>
+</div>

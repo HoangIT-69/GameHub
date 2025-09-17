@@ -1,0 +1,102 @@
+<div class="page-wrapper">
+
+
+
+ <!-- =============================== -->
+<!-- 2. HERO SECTION (PHẦN WELCOME)  -->
+<!-- =============================== -->
+<section class="hero-section">
+  <!-- Swiper -->
+  <div class="swiper hero-swiper">
+    <div class="swiper-wrapper">
+      <!-- Lặp qua 5 game nổi bật -->
+      <div *ngFor="let game of featuredGames" class="swiper-slide" 
+           [style.backgroundImage]="'url(' + game.images[0] + ')'">
+           <div class="slide-background-wrapper">
+            <!-- Lớp nền mờ (Blur) -->
+            <div class="slide-background-blur" [style.backgroundImage]="'url(' + game.images[0] + ')'"></div>
+            <!-- Ảnh chính (Contain) -->
+            <div class="slide-background-main" [style.backgroundImage]="'url(' + game.images[0] + ')'"></div>
+          </div>
+        
+        <div class="hero-content">
+          <h1>{{ game.title }}</h1>
+          <p>{{ game.description | slice:0:150 }}...</p> <!-- Rút gọn mô tả -->
+          <a [routerLink]="['/games', game._id]" class="btn btn-secondary">View Details</a>
+        </div>
+
+      </div>
+    </div>
+    <!-- Thêm các nút điều hướng -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+    <!-- Thêm pagination (dấu chấm) -->
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+  
+
+
+  <!-- =============================== -->
+  <!-- 3. GAME LIST (DANH SÁCH GAME)   -->
+  <!-- =============================== -->
+ <h2 style="margin-left: 20px;">Featured Games </h2>
+
+<!-- ==================================== -->
+<!-- THANH TÌM KIẾM VÀ LỌC (MỚI)        -->
+<!-- ==================================== -->
+<div class="filter-bar" [formGroup]="filterForm">
+  <!-- Search Input -->
+  <mat-form-field appearance="outline" class="filter-search">
+    <mat-label>Search by name or developer</mat-label>
+    <input matInput formControlName="search" placeholder="E.g., Elden Ring">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <!-- Genre Filter -->
+  <mat-form-field appearance="outline" class="filter-genre">
+    <mat-label>Genre</mat-label>
+    <mat-select formControlName="genre">
+      <mat-option value="All">All Genres</mat-option>
+      <!-- Các thể loại này nên được lấy động, nhưng tạm thời hard-code -->
+      <mat-option value="Action RPG">Action RPG</mat-option>
+      <mat-option value="Action-Adventure">Action-Adventure</mat-option>
+      <mat-option value="Hack and Slash">Hack and Slash</mat-option>
+      <mat-option value="Mythology">Mythology</mat-option>
+      <!-- Thêm các genre khác ở đây -->
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Price Filter -->
+  <div class="filter-price">
+    <label>Max Price: <span>{{ filterForm.get('maxPrice')?.value | currency:'USD' }}</span></label>
+    <mat-slider min="0" max="100" step="1" discrete>
+      <input matSliderThumb formControlName="maxPrice">
+    </mat-slider>
+  </div>
+</div>
+
+<!-- CẤU TRÚC DANH SÁCH GAME (ĐÃ SỬA ĐỂ HIỂN THỊ KẾT QUẢ LỌC) -->
+<div *ngIf="filteredGames && filteredGames.length > 0; else noGamesFound" class="game-grid">
+  <a *ngFor="let game of filteredGames" [routerLink]="['/games', game._id]" class="game-card">
+     <div class="game-card__image-wrapper">
+    <img [src]="game.images[1]" [alt]="game.title" class="game-card__image">
+  </div>
+  <div class="game-card__info">
+    <h3 class="game-card__title">{{ game.title }}</h3>
+    <p class="game-card__developer">{{ game.developer }}</p>
+    <p class="game-card__price">{{ game.price | currency:'USD' }}</p>
+  </div>
+  </a>
+</div>
+
+<!-- Template hiển thị khi không có game nào khớp -->
+<ng-template #noGamesFound>
+  <div class="no-games-found">
+    <p>No games match your criteria. Try adjusting your filters.</p>
+  </div>
+</ng-template>
+
+  <!-- PHẦN FOOTER TẠM THỜI BỎ ĐI CHO ĐỠ RỐI -->
+
+</div>

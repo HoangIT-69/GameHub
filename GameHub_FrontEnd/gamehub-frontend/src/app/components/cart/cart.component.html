@@ -1,0 +1,53 @@
+<div class="cart-page container">
+  <h1>Your Shopping Cart</h1>
+
+  <!-- Sử dụng async pipe để lấy dữ liệu -->
+  <ng-container *ngIf="(cartItems$ | async) as items">
+    <!-- Hiển thị nếu giỏ hàng có sản phẩm -->
+    <div *ngIf="items.length > 0; else emptyCart" class="cart-layout">
+      
+      <!-- CỘT BÊN TRÁI: DANH SÁCH SẢN PHẨM -->
+      <div class="cart-items-list">
+        <div *ngFor="let item of items" class="cart-item">
+          <img [src]="item.images[1]" alt="{{ item.title }}" class="item-image">
+          <div class="item-details">
+            <a [routerLink]="['/games', item._id]" class="item-title">{{ item.title }}</a>
+            <p class="item-price">{{ item.price | currency:'USD' }}</p>
+          </div>
+          <button (click)="removeFromCart(item._id)" class="remove-button">
+            &times; <!-- Dấu 'x' -->
+          </button>
+        </div>
+      </div>
+
+      <!-- CỘT BÊN PHẢI: TÓM TẮT ĐƠN HÀNG -->
+      <aside class="order-summary">
+        <h2>Order Summary</h2>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>{{ totalPrice$ | async | currency:'USD' }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Taxes</span>
+          <span>Calculated at checkout</span>
+        </div>
+        <div class="summary-total">
+          <span>Total</span>
+          <span>{{ totalPrice$ | async | currency:'USD' }}</span>
+        </div>
+        <button routerLink="/checkout" class="btn btn-primary checkout-button">
+          Proceed to Checkout
+        </button>
+        <button (click)="clearCart()" class="clear-cart-button">Clear Cart</button>
+      </aside>
+    </div>
+
+    <!-- Template hiển thị nếu giỏ hàng trống -->
+    <ng-template #emptyCart>
+      <div class="empty-cart-container">
+        <p>Your cart is empty.</p>
+        <a routerLink="/" class="btn btn-secondary">Continue Shopping</a>
+      </div>
+    </ng-template>
+  </ng-container>
+</div>

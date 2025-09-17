@@ -1,0 +1,58 @@
+<div class="checkout-page container">
+  <h1>Checkout</h1>
+
+  <div class="checkout-layout" *ngIf="(cartItems$ | async) as items">
+    <ng-container *ngIf="items.length > 0; else emptyCart">
+      <!-- CỘT BÊN TRÁI: FORM VÀ HÀNH ĐỘNG -->
+      <div class="customer-info">
+        <div *ngIf="!(hasSufficientFunds$ | async) && (currentUser$ | async)" class="alert alert-danger">
+          <strong>Insufficient Funds!</strong> Your current balance is not enough to complete this purchase.
+        </div>
+        
+        <h2>Confirm Your Purchase</h2>
+        <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+          <p>You are about to purchase {{ items.length }} item(s). The total amount will be deducted from your wallet balance.</p>
+          
+          <mat-checkbox formControlName="confirmPurchase" color="primary">
+            I understand and agree to purchase these items.
+          </mat-checkbox>
+          
+          <button 
+            type="submit" 
+            class="btn btn-primary btn-block" 
+            [disabled]="checkoutForm.invalid || !(hasSufficientFunds$ | async) || isProcessing">
+              <span *ngIf="!isProcessing">Complete Purchase ({{ totalPrice$ | async | currency:'USD' }})</span>
+              <span *ngIf="isProcessing">Processing...</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- CỘT BÊN PHẢI: TÓM TẮT ĐƠN HÀNG -->
+      <aside class="order-summary">
+        <h2>Order Summary</h2>
+        <div *ngIf="(currentUser$ | async) as user" class="summary-row user-balance">
+          <span>Your Balance</span>
+          <span>{{ user.walletBalance | currency:'USD' }}</span>
+        </div>
+        <hr>
+        <div *ngFor="let item of items" class="summary-item">
+          <span>{{ item.title }}</span>
+          <span>{{ item.price | currency:'USD' }}</span>
+        </div>
+        <hr>
+        <div class="summary-total">
+          <span>Total</span>
+          <strong>{{ totalPrice$ | async | currency:'USD' }}</strong>
+        </div>
+      </aside>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Template khi giỏ hàng trống -->
+<ng-template #emptyCart>
+  <div class="empty-cart-container">
+    <p>Your cart is empty. You cannot proceed to checkout.</p>
+    <a routerLink="/" class="btn btn-secondary">Go Shopping</a>
+  </div>
+</ng-template>

@@ -1,0 +1,314 @@
+:host {
+  // --- Áp dụng nền tối cho toàn bộ trang chủ ---
+  display: block; // Quan trọng: Đảm bảo component chiếm toàn bộ không gian
+  background-color: #1a1a1a; // Màu nền đen than
+  color: #ffffff; // Màu chữ mặc định
+
+  // --- Định nghĩa các biến màu ---
+  --primary-color: #f8b21a;
+  --secondary-color: #00aaff;
+  --dark-bg: #1a1a1a;
+  --header-bg-start: #1f1f1f;
+  --header-bg-end: #111111;
+  --text-color: #ffffff;
+  --text-muted: #a0a0a0;
+  --border-color: #333;
+}
+
+// Reset và CSS chung
+.page-wrapper {
+  background-color: var(--dark-bg);
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+
+
+// === 2. STYLE CHO HERO SECTION (PHIÊN BẢN SLIDER) ===
+.hero-section {
+  height: 80vh;
+  width: 100%;
+  position: relative;
+  background-color: #000;
+  margin-bottom: 20px;
+}
+
+.hero-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  position: relative;
+  overflow: hidden;
+}
+
+// --- 1. Ảnh nền ---
+.slide-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 6s ease-out; // Tăng thời gian transition cho mượt hơn
+
+  // Hiệu ứng Ken Burns (zoom chậm)
+  .swiper-slide-active & {
+    transform: scale(1.15);
+  }
+}
+
+// --- 2. Lớp phủ Gradient mới (Overlay) ---
+.swiper-slide::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(15, 15, 15, 1) 10%, transparent 100%);
+  transform: scale(1.2); 
+}
+.slide-background-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; // Đảm bảo lớp nền mờ không bị tràn ra ngoài
+}
+
+// Lớp nền mờ ở phía sau
+.slide-background-blur {
+  position: absolute;
+  top: -20px; // Dịch chuyển một chút để hiệu ứng mờ trông đẹp hơn
+  left: -20px;
+  width: calc(100% + 40px);
+  height: calc(100% + 40px);
+  background-size: cover; // Lớp này vẫn dùng cover để lấp đầy
+  background-position: center;
+  filter: blur(15px); // Làm mờ ảnh
+  opacity: 0.5; // Giảm độ sáng
+  transform: scale(1.1); // Phóng to hơn ảnh chính
+}
+
+// Ảnh chính ở phía trên
+.slide-background-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  // --- THAY ĐỔI CHÍNH Ở ĐÂY ---
+  background-size: contain; // Hiển thị toàn bộ ảnh
+  background-position: center; // Căn ảnh vào giữa
+  background-repeat: no-repeat; // Không lặp lại ảnh
+}
+
+// --- 3. Bố cục nội dung ở dưới đáy ---
+.slide-content-container {
+  // Bỏ đi các thuộc tính flexbox cũ
+  // Thay vào đó, chúng ta sẽ định vị trực tiếp .hero-content
+  // Container này chỉ đóng vai trò giữ padding chung
+  padding: 0 5%; // Tạo khoảng cách 5% so với cạnh trái/phải màn hình
+}
+
+.hero-content {
+  color: white;
+  width: 50%; // Giới hạn chiều rộng khối nội dung để không tràn hết màn hình
+  text-align: left; // Căn chữ về bên trái
+
+  // --- THAY ĐỔI CHÍNH Ở ĐÂY ---
+  position: absolute; // Định vị tuyệt đối so với .swiper-slide cha
+  bottom: 10%;      // Cách đáy 10% chiều cao của slider
+  left: 5%;         // Cách cạnh trái 5% chiều rộng của slider
+  z-index: 2;       // Đảm bảo nằm trên lớp phủ gradient
+
+  h1 {
+    font-size: 4em; // Có thể giữ lại font lớn vì không bị giới hạn không gian
+    font-weight: 800; // Tăng độ đậm cho nổi bật
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+  }
+  
+  p {
+    font-size: 1.1em;
+    color: var(--text-muted);
+    // Giảm max-width vì khối content đã hẹp hơn
+    max-width: 550px; 
+    margin: 0 0 30px 0; // Bỏ căn giữa auto
+    line-height: 1.6;
+  }
+}
+
+
+
+// --- 4. Nút điều hướng màu xanh nước biển ---
+.swiper-button-next, .swiper-button-prev {
+  // Thay đổi màu ở đây
+  color: #00aaff !important; // Màu xanh nước biển sáng
+  transition: transform 0.3s ease;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+// Giữ lại style cho pagination cho dễ nhìn
+.swiper-pagination-bullet-active {
+  background: #00aaff !important; 
+}
+
+// === 3. STYLE CHO GAME LIST ===
+.game-grid {
+  display: grid;
+  // 5 cột trên màn hình lớn, tự động điều chỉnh cho màn hình nhỏ hơn
+  margin-left: 20px;
+  grid-template-columns: repeat(6, 1fr); 
+  gap: 25px; // Khoảng cách giữa các game
+
+  // Responsive: 4 cột trên tablet
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  // 3 cột trên tablet nhỏ
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  // 2 cột trên mobile
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.game-card {
+  background-color: transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-8px); // Hiệu ứng nhấc lên khi hover
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+  }
+}
+
+.game-card__image-wrapper {
+  // Đảm bảo ảnh luôn có tỷ lệ 3:4 (dọc)
+  aspect-ratio: 3 / 4;
+  background-color: #222; // Màu nền chờ khi ảnh chưa tải
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.game-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; // Lấp đầy khung mà không bị méo
+  transition: transform 0.4s ease;
+
+  // Hiệu ứng zoom ảnh bên trong card khi hover
+  .game-card:hover & {
+    transform: scale(1.05);
+  }
+}
+
+.game-card__info {
+  padding: 15px 5px; // Padding cho phần thông tin
+}
+
+.game-card__title {
+  font-size: 0.7em;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  // Ngăn chữ quá dài
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.game-card__developer {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  margin: 0 0 10px 0;
+}
+
+.game-card__price {
+  font-size: 1em;
+  font-weight: 700;
+  margin: 0;
+}
+.filter-bar {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color: var(--component-bg, #1e1e1e);
+  border-radius: 8px;
+  margin-bottom: 40px;
+}
+
+.filter-search {
+  flex: 2; // Chiếm nhiều không gian nhất
+  min-width: 250px;
+}
+
+.filter-genre {
+  flex: 1;
+  min-width: 150px;
+}
+
+.filter-price {
+  flex: 2;
+  min-width: 250px;
+  color: var(--text-muted);
+  label {
+    margin-bottom: -10px;
+    display: block;
+    font-size: 0.9em;
+    span {
+      color: var(--text-color);
+      font-weight: bold;
+    }
+  }
+}
+
+.no-games-found {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2em;
+  color: var(--text-muted);
+}
+
+// Tùy chỉnh màu cho Material components
+::ng-deep {
+    .filter-search .mat-mdc-input-element {
+    color: white !important; // Hoặc tốt hơn là dùng biến CSS của bạn: var(--text-color)
+  }
+  .mat-mdc-form-field {
+    // ... (các style cũ nếu bạn có) ...
+  }
+  .mat-mdc-slider {
+    .mdc-slider__track--active_fill {
+      border-color: var(--primary-color) !important;
+    }
+    .mdc-slider__thumb-knob {
+      background-color: var(--primary-color) !important;
+      border-color: var(--primary-color) !important;
+    }
+  }
+}

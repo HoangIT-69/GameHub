@@ -1,0 +1,358 @@
+// ===================================================
+// BIẾN MÀU SẮC (Dùng riêng cho component này)
+// ===================================================
+:host {
+  --primary-color: #f8b21a;
+  --dark-bg: #121212;
+  --text-color: #e0e0e0;
+  --text-muted: #888888;
+  --border-color: #282828;
+}
+
+
+// ===================================================
+// STYLE CHUNG CHO TOÀN BỘ TRANG
+// ===================================================
+.page-container {
+  background-color: var(--dark-bg);
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.genre-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+  .genre-tag {
+    background-color: #333;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.85em;
+  }
+
+// Các nút bấm (sao chép từ style global để đảm bảo hoạt động)
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 30px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+.btn-primary {
+  background-color: var(--primary-color);
+
+  color: #000;
+  border-color: var(--primary-color);
+  &:hover {
+    background-color: transparent;
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(248, 178, 26, 0.3);
+  }
+}
+.btn-secondary {
+  background-color: transparent;
+  border-color: #ffffff;
+  color: #ffffff;
+  &:hover {
+    background-color: #ffffff;
+    color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+  }
+}
+
+
+// ===================================================
+// HERO HEADER
+// ===================================================
+.game-detail-header {
+  height: 50vh;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  padding: 40px;
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, var(--dark-bg) 10%, transparent 90%);
+  }
+
+  .header-content {
+    position: relative;
+    z-index: 2;
+    h1 {
+      font-size: 4em;
+      margin: 0;
+      text-shadow: 2px 2px 10px #000;
+    }
+  }
+}
+
+
+// ===========================================
+// LAYOUT 2 CỘT
+// ===========================================
+.game-content {
+  display: flex;
+  flex-wrap: wrap; // Cho phép xuống dòng trên mobile
+  gap: 50px; // Khoảng cách giữa 2 cột
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+// --- CỘT TRÁI: NỘI DUNG CHÍNH ---
+.main-content {
+  flex: 1;
+  min-width: 60%;
+  
+  h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+  }
+  
+  .description {
+    line-height: 1.8;
+    color: var(--text-muted);
+    font-size: 1.1em;
+    margin-bottom: 40px;
+  }
+}
+
+// --- CỘT PHẢI: SIDEBAR MUA HÀNG ---
+.sidebar-content {
+  flex-basis: 320px; // Tăng nhẹ chiều rộng sidebar
+  flex-grow: 0;
+  position: relative;
+}
+
+.sidebar-sticky-content {
+  position: sticky;
+  top: 120px;
+  
+   .sidebar-cover-wrapper {
+    width: 100%;
+    // Ép container phải có tỷ lệ khung hình 3:4 (chiều rộng 3, chiều cao 4)
+    // Đây là tỷ lệ phổ biến cho bìa game dạng dọc
+    aspect-ratio: 3 / 4; 
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    overflow: hidden; // Quan trọng: Ẩn phần thừa của ảnh
+    background-color: #222; // Màu nền chờ khi ảnh chưa tải
+  }
+
+  .sidebar-cover {
+    width: 100%;
+    height: 100%;
+    // "Phép màu" giúp ảnh lấp đầy container mà không bị bóp méo
+    object-fit: cover; 
+    object-position: center; // Luôn căn giữa ảnh
+     border-radius: 12px;
+    margin-bottom: 25px; // Tăng khoảng cách dưới ảnh
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+
+
+
+  // Khối thông tin meta mới (Developer, Publisher...)
+  .sidebar-meta-info {
+    margin-bottom: 25px;
+    font-size: 0.9em;
+  }
+  .meta-item {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-muted);
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+
+    .meta-value {
+      color: var(--text-color);
+      font-weight: 500;
+    }
+  }
+
+  // Khối mua hàng
+  .sidebar-purchase-section {
+    text-align: center; // Căn giữa nội dung trong khối này
+    
+    h2 { // Giá tiền
+      font-size: 3em; // Tăng kích thước giá tiền
+      color: var(--text-color); // Chữ màu trắng
+      font-weight: 700;
+      margin: 0 0 15px 0;
+
+      // Style cho ký hiệu tiền tệ
+      .ng-star-inserted { // Angular thêm class này vào ký hiệu currency
+        color: var(--text-muted);
+        font-size: 0.5em;
+        vertical-align: super;
+        margin-right: 5px;
+      }
+    }
+
+    .btn {
+      width: 100%;
+      padding: 18px 0;
+      font-size: 1.1em;
+      margin-bottom: 25px;
+    }
+  }
+}
+
+// --- XỬ LÝ RESPONSIVE CHO MOBILE ---
+.buy-section-mobile { display: none; }
+@media (max-width: 768px) {
+  .game-content { flex-direction: column; }
+  .sidebar-content { display: none; }
+  .buy-section-mobile { display: block; margin-bottom: 30px; }
+}
+
+// --- GALLERY SLIDER ---
+.gallery-swiper {
+  width: 100%;
+  height: 300px;
+  padding-bottom: 40px;
+}
+.gallery-slide {
+  width: 70%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+}
+.system-requirements {
+  margin-top: 50px;
+
+  .requirements-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    background-color: var(--component-bg, #1e1e1e); // Sử dụng biến màu nếu có, hoặc màu dự phòng
+    padding: 30px;
+    border-radius: 12px;
+    margin-top: 20px;
+  }
+
+  .requirements-column {
+    h3 {
+      font-size: 1.4em;
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      li {
+        margin-bottom: 12px;
+        line-height: 1.6;
+        color: var(--text-muted);
+        strong {
+          color: var(--text-color);
+          display: block;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+
+// ===========================================
+// STYLE CHO ĐÁNH GIÁ CỦA NGƯỜI DÙNG
+// ===========================================
+.user-reviews {
+  margin-top: 50px;
+
+  .review-card {
+    background-color: var(--component-bg, #1e1e1e);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--primary-color);
+  }
+
+  .review-author {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .author-name {
+    font-weight: 700;
+    color: var(--text-color);
+  }
+
+  .review-date {
+    font-size: 0.85em;
+    color: var(--text-muted);
+  }
+
+  .review-rating {
+    font-size: 1.2em;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+  }
+
+  .review-text {
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .see-all-reviews {
+    display: block;
+    width: fit-content;
+    margin: 20px auto 0;
+  }
+}
+
+// Cập nhật responsive cho các khối mới
+@media (max-width: 768px) {
+  .system-requirements .requirements-grid {
+    grid-template-columns: 1fr; // Chuyển thành 1 cột trên mobile
+    gap: 30px;
+  }
+}
+
+.gallery-button-next, .gallery-button-prev { color: var(--primary-color) !important; }
+.gallery-pagination { bottom: 0 !important; }

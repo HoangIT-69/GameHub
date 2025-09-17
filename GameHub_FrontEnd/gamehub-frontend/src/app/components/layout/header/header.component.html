@@ -1,0 +1,53 @@
+<!-- =============================== -->
+<!-- 1. HEADER (THANH ĐIỀU HƯỚNG)   -->
+<!-- =============================== -->
+<header class="site-header">
+  <div class="container">
+    <nav class="main-nav">
+      
+      <!-- Logo -->
+      <a routerLink="/" class="logo">
+        <img src="assets/img/logo.jpg" alt="GameHub Logo"> <!-- Sửa lại đường dẫn nếu cần -->
+      </a>
+
+      <!-- Menu Items (Nằm ở giữa) -->
+      <ul class="nav-links">
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/my-library">My Library</a></li>
+        <li><a routerLink="/community">Community</a></li>
+        <li><a routerLink="/contact">Contact</a></li>
+      </ul>
+
+      <!-- Khối Actions bên phải (Giỏ hàng & Auth) -->
+      <div class="nav-actions">
+        
+        <!-- Icon Giỏ hàng -->
+        <a routerLink="/cart" class="cart-icon">
+          <mat-icon>shopping_cart</mat-icon>
+          <span *ngIf="(cartItemCount$ | async) as count" [hidden]="count === 0" class="cart-badge">
+            {{ count }}
+          </span>
+        </a>
+
+        <!-- Khối Auth (Đăng nhập/Hồ sơ người dùng) -->
+        <div class="auth-section">
+          <!-- Hiển thị khi người dùng đã đăng nhập -->
+          <ng-container *ngIf="currentUser$ | async as user; else showLoginButton">
+            <div class="user-profile">
+              <img [src]="'assets/img/avatar.jpg'" alt="{{ user.name }}'s avatar" class="avatar">
+              <span class="user-name">{{ user.name }}</span>
+              <button (click)="logout()" class="btn-logout">Logout</button>
+            </div>
+          </ng-container>
+
+          <!-- Hiển thị khi người dùng chưa đăng nhập -->
+          <ng-template #showLoginButton>
+            <a routerLink="/login" class="btn btn-primary">Login / Register</a>
+          </ng-template>
+        </div>
+
+      </div> <!-- Kết thúc .nav-actions -->
+
+    </nav>
+  </div>
+</header>
