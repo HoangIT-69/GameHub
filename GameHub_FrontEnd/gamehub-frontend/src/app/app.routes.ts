@@ -11,7 +11,7 @@ import { MyLibraryComponent } from './components/my-library/my-library.component
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'games/:id', component: GameDetailComponent },
+    { path: 'games/:id', component: GameDetailComponent},
     { path: 'register', component: RegisterComponent },
     { path: 'cart', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent },
