@@ -5,12 +5,13 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CartService } from './cart.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api/auth';
+   private apiUrl = `${environment.apiUrl}/auth`; 
   private currentUserSubject = new BehaviorSubject<any>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
   private isBrowser: boolean; // Biến để lưu trạng thái môi trường
